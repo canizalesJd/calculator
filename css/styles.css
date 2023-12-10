@@ -41,6 +41,9 @@ body {
 }
 
 .calculator-display {
+  text-align: right;
+  word-wrap: break-word;
+  word-break: break-all;
   border-radius: 10px;
   text-align: right;
   background-color: var(--nigth);
