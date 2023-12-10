@@ -14,8 +14,6 @@ const divide = (firstNum, secondNum) => {
   return parseFloat(firstNum) / parseFloat(secondNum);
 };
 
-const operators = ["+", "-", "*", "/"];
-
 // Getting number buttons
 const number1 = document.querySelector("#one-btn");
 const number2 = document.querySelector("#two-btn");
@@ -42,7 +40,8 @@ const backspaceBtn = document.querySelector("#backspace-btn");
 
 // Creating functions to add numbers to the display
 const display = document.querySelector(".calculator-display");
-const appendToDisplay = (value) => {
+let append = true;
+const updateDisplay = (value) => {
   if (display.innerHTML === "0") {
     display.innerHTML = "";
   }
@@ -50,15 +49,27 @@ const appendToDisplay = (value) => {
     display.innerHTML += value;
   }
   if (value !== ".") {
-    display.innerHTML += value;
+    if (operationCounter > 0) {
+      if (display.innerHTML.length > 1 && append === false) {
+        display.innerHTML = value;
+        append = true;
+        return;
+      }
+      if (append === true) {
+        display.innerHTML += value;
+        return;
+      }
+    } else {
+      display.innerHTML += value;
+    }
   }
 };
 
 // Clear display
-const clearDisplay = () => {
+const clearCalculator = () => {
   display.innerHTML = "0";
 };
-clearBtn.addEventListener("click", clearDisplay);
+clearBtn.addEventListener("click", clearCalculator);
 
 // Backspace function
 const backspace = () => {
@@ -70,15 +81,55 @@ const backspace = () => {
 backspaceBtn.addEventListener("click", backspace);
 
 // Adding number values to display
-number0.addEventListener("click", appendToDisplay.bind(this, 0));
-number1.addEventListener("click", appendToDisplay.bind(this, 1));
-number2.addEventListener("click", appendToDisplay.bind(this, 2));
-number3.addEventListener("click", appendToDisplay.bind(this, 3));
-number4.addEventListener("click", appendToDisplay.bind(this, 4));
-number5.addEventListener("click", appendToDisplay.bind(this, 5));
-number6.addEventListener("click", appendToDisplay.bind(this, 6));
-number7.addEventListener("click", appendToDisplay.bind(this, 7));
-number8.addEventListener("click", appendToDisplay.bind(this, 8));
-number9.addEventListener("click", appendToDisplay.bind(this, 9));
+number0.addEventListener("click", updateDisplay.bind(this, 0));
+number1.addEventListener("click", updateDisplay.bind(this, 1));
+number2.addEventListener("click", updateDisplay.bind(this, 2));
+number3.addEventListener("click", updateDisplay.bind(this, 3));
+number4.addEventListener("click", updateDisplay.bind(this, 4));
+number5.addEventListener("click", updateDisplay.bind(this, 5));
+number6.addEventListener("click", updateDisplay.bind(this, 6));
+number7.addEventListener("click", updateDisplay.bind(this, 7));
+number8.addEventListener("click", updateDisplay.bind(this, 8));
+number9.addEventListener("click", updateDisplay.bind(this, 9));
 // Adding decimal value to display
-decimal.addEventListener("click", appendToDisplay.bind(this, "."));
+decimal.addEventListener("click", updateDisplay.bind(this, "."));
+
+const operate = (operator, firstNum, secondNum) => {
+  let result;
+  if (operator === "+") {
+    result = add(firstNum, secondNum);
+    display.innerHTML = result;
+    return result;
+  }
+  if (operator === "-") {
+    return (display.innerHTML = substract(firstNum, secondNum));
+  }
+  if (operator === "*") {
+    return (display.innerHTML = multiply(firstNum, secondNum));
+  }
+  if (operator === "/") {
+    return (display.innerHTML = divide(firstNum, secondNum));
+  }
+  return "Error";
+};
+
+let operationCounter = 0;
+let firstNum;
+let secondNum;
+
+addBtn.addEventListener("click", () => {
+  if (operationCounter === 0) {
+    firstNum = display.innerHTML;
+    append = false;
+  }
+  if (operationCounter === 1) {
+    secondNum = display.innerHTML;
+    append = false;
+  }
+  console.log(firstNum, secondNum, operationCounter);
+  if (firstNum && secondNum) {
+    firstNum = operate("+", firstNum, secondNum);
+    operationCounter = 0;
+  }
+  operationCounter++;
+});
