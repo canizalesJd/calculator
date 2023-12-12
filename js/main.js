@@ -40,12 +40,19 @@ const backspaceBtn = document.querySelector("#backspace-btn");
 
 // Creating functions to add numbers to the display
 const display = document.querySelector(".calculator-display");
+let displayValue = display.innerHTML;
+let append = false;
+
 const updateDisplay = (value) => {
-  if (display.innerHTML === "0") {
-    display.innerHTML = value;
-  } else {
+  console.log(value);
+  console.log(append);
+  if (append) {
     display.innerHTML += value;
+  } else {
+    display.innerHTML = value;
+    append = true;
   }
+  displayValue = display.innerHTML;
 };
 
 // Clear display
@@ -78,15 +85,101 @@ number9.addEventListener("click", updateDisplay.bind(this, 9));
 decimal.addEventListener("click", updateDisplay.bind(this, "."));
 
 // Operator functions
+let firstNum = "";
+let secondNum = "";
+let operator = "";
+let operationCounter = 0;
+
+const operate = (operator, firstNum, secondNum) => {
+  switch (operator) {
+    case "+":
+      return add(firstNum, secondNum);
+    case "-":
+      return substract(firstNum, secondNum);
+    case "*":
+      return multiply(firstNum, secondNum);
+    case "/":
+      return divide(firstNum, secondNum);
+  }
+};
+
 addBtn.addEventListener("click", () => {
-  console.log("+");
+  append = false;
+  if (operationCounter === 0) {
+    firstNum = displayValue;
+  }
+  if (operationCounter === 1) {
+    secondNum = displayValue;
+  }
+  if (firstNum && secondNum) {
+    console.log(operator);
+    const result = operate(operator, firstNum, secondNum);
+    updateDisplay(result);
+    append = false;
+    firstNum = displayValue;
+    secondNum = "";
+    operationCounter = 0;
+  }
+  operator = "+";
+  operationCounter++;
 });
 substractBtn.addEventListener("click", () => {
-  console.log("-");
+  append = false;
+  if (operationCounter === 0) {
+    firstNum = displayValue;
+  }
+  if (operationCounter === 1) {
+    secondNum = displayValue;
+  }
+  if (firstNum && secondNum) {
+    console.log(operator);
+    const result = operate(operator, firstNum, secondNum);
+    updateDisplay(result);
+    append = false;
+    firstNum = displayValue;
+    secondNum = "";
+    operationCounter = 0;
+  }
+  operator = "-";
+  operationCounter++;
 });
 multiplyBtn.addEventListener("click", () => {
-  console.log("*");
+  append = false;
+  if (operationCounter === 0) {
+    firstNum = displayValue;
+  }
+  if (operationCounter === 1) {
+    secondNum = displayValue;
+  }
+  if (firstNum && secondNum) {
+    console.log(operator);
+    const result = operate(operator, firstNum, secondNum);
+    updateDisplay(result);
+    append = false;
+    firstNum = displayValue;
+    secondNum = "";
+    operationCounter = 0;
+  }
+  operator = "*";
+  operationCounter++;
 });
 divideBtn.addEventListener("click", () => {
-  console.log("/");
+  append = false;
+  if (operationCounter === 0) {
+    firstNum = displayValue;
+  }
+  if (operationCounter === 1) {
+    secondNum = displayValue;
+  }
+  if (firstNum && secondNum) {
+    console.log(operator);
+    const result = operate(operator, firstNum, secondNum);
+    updateDisplay(result);
+    append = false;
+    firstNum = displayValue;
+    secondNum = "";
+    operationCounter = 0;
+  }
+  operator = "/";
+  operationCounter++;
 });
