@@ -59,6 +59,10 @@ const updateDisplay = (value) => {
 // Clear display
 const clearDisplay = () => {
   display.innerHTML = "0";
+  firstNum = "";
+  secondNum = "";
+  operationCounter = 0;
+  operator = undefined;
 };
 clearBtn.addEventListener("click", clearDisplay);
 
