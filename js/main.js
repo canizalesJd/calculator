@@ -66,6 +66,7 @@ clearBtn.addEventListener("click", clearDisplay);
 const backspace = () => {
   display.innerHTML = display.innerHTML.slice(0, -1);
   if (display.innerHTML === "") {
+    append = false;
     display.innerHTML = "0";
   }
 };
