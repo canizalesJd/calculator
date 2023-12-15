@@ -167,3 +167,72 @@ divideBtn.addEventListener("click", () => {
   operator = "/";
   operationCounter++;
 });
+
+// Keyboard support
+window.addEventListener("keypress", (event) => {
+  const key = event.key;
+  switch (key) {
+    case "1":
+      updateDisplay(1);
+      break;
+    case "2":
+      updateDisplay(2);
+      break;
+    case "3":
+      updateDisplay(3);
+      break;
+    case "4":
+      updateDisplay(4);
+      break;
+    case "5":
+      updateDisplay(5);
+      break;
+    case "6":
+      updateDisplay(6);
+      break;
+    case "7":
+      updateDisplay(7);
+      break;
+    case "8":
+      updateDisplay(8);
+      break;
+    case "9":
+      updateDisplay(9);
+      break;
+    case "0":
+      updateDisplay(0);
+      break;
+    case ".":
+      updateDisplay(".");
+      break;
+    case "+":
+      operation();
+      operator = "+";
+      operationCounter++;
+      break;
+    case "-":
+      operation();
+      operator = "-";
+      operationCounter++;
+      break;
+    case "*":
+      operation();
+      operator = "*";
+      operationCounter++;
+      break;
+    case "/":
+      operation();
+      operator = "/";
+      operationCounter++;
+      break;
+    case "Enter":
+      equals();
+      break;
+    case "Backspace":
+      backspace();
+      break;
+    case "=":
+      equals();
+      break;
+  }
+});
