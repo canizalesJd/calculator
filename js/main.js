@@ -44,8 +44,9 @@ let displayValue = display.innerHTML;
 let append = false;
 
 const updateDisplay = (value) => {
-  console.log(value);
-  console.log(append);
+  if (value === "." && displayValue.includes(".")) {
+    return;
+  }
   if (append) {
     display.innerHTML += value;
   } else {
@@ -90,6 +91,21 @@ let secondNum = "";
 let operator = "";
 let operationCounter = 0;
 
+const equals = () => {
+  append = false;
+  if (operationCounter === 1) {
+    secondNum = displayValue;
+  }
+  if (firstNum && secondNum) {
+    const result = operate(operator, firstNum, secondNum);
+    updateDisplay(result);
+    append = false;
+    firstNum = displayValue;
+    secondNum = "";
+    operationCounter = 0;
+  }
+};
+
 const operate = (operator, firstNum, secondNum) => {
   switch (operator) {
     case "+":
@@ -99,11 +115,16 @@ const operate = (operator, firstNum, secondNum) => {
     case "*":
       return multiply(firstNum, secondNum);
     case "/":
+      if (secondNum === "0") {
+        return "Error";
+      }
       return divide(firstNum, secondNum);
   }
 };
 
-addBtn.addEventListener("click", () => {
+enterBtn.addEventListener("click", equals);
+
+const operation = () => {
   append = false;
   if (operationCounter === 0) {
     firstNum = displayValue;
@@ -112,7 +133,6 @@ addBtn.addEventListener("click", () => {
     secondNum = displayValue;
   }
   if (firstNum && secondNum) {
-    console.log(operator);
     const result = operate(operator, firstNum, secondNum);
     updateDisplay(result);
     append = false;
@@ -120,66 +140,25 @@ addBtn.addEventListener("click", () => {
     secondNum = "";
     operationCounter = 0;
   }
+};
+
+addBtn.addEventListener("click", () => {
+  operation();
   operator = "+";
   operationCounter++;
 });
 substractBtn.addEventListener("click", () => {
-  append = false;
-  if (operationCounter === 0) {
-    firstNum = displayValue;
-  }
-  if (operationCounter === 1) {
-    secondNum = displayValue;
-  }
-  if (firstNum && secondNum) {
-    console.log(operator);
-    const result = operate(operator, firstNum, secondNum);
-    updateDisplay(result);
-    append = false;
-    firstNum = displayValue;
-    secondNum = "";
-    operationCounter = 0;
-  }
+  operation();
   operator = "-";
   operationCounter++;
 });
 multiplyBtn.addEventListener("click", () => {
-  append = false;
-  if (operationCounter === 0) {
-    firstNum = displayValue;
-  }
-  if (operationCounter === 1) {
-    secondNum = displayValue;
-  }
-  if (firstNum && secondNum) {
-    console.log(operator);
-    const result = operate(operator, firstNum, secondNum);
-    updateDisplay(result);
-    append = false;
-    firstNum = displayValue;
-    secondNum = "";
-    operationCounter = 0;
-  }
+  operation();
   operator = "*";
   operationCounter++;
 });
 divideBtn.addEventListener("click", () => {
-  append = false;
-  if (operationCounter === 0) {
-    firstNum = displayValue;
-  }
-  if (operationCounter === 1) {
-    secondNum = displayValue;
-  }
-  if (firstNum && secondNum) {
-    console.log(operator);
-    const result = operate(operator, firstNum, secondNum);
-    updateDisplay(result);
-    append = false;
-    firstNum = displayValue;
-    secondNum = "";
-    operationCounter = 0;
-  }
+  operation();
   operator = "/";
   operationCounter++;
 });
